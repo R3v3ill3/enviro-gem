@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from '@/components/ui/toaster';
 import { Leaf } from 'lucide-react';
 import { auth, logoutUser } from './utils/firebase';
 import CampaignForm from './components/CampaignForm';
@@ -76,7 +76,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-100">
-      <Toaster position="top-right" />
+      <Toaster />
       
       {/* Header */}
       <header className="bg-primary-800 text-white shadow-md">
