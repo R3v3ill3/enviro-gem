@@ -17,12 +17,12 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onSubmit }) => {
     setError('');
 
     try {
-      const user = isRegistering 
+      const userCredential = isRegistering 
         ? await registerUser(email, password)
         : await loginUser(email, password);
       
-      if (user) {
-        onSubmit(user.uid);
+      if (userCredential?.user) {
+        onSubmit(userCredential.user.uid);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Authentication failed');

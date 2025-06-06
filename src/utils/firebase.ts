@@ -6,7 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signOut
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -35,4 +35,37 @@ export const registerUser = async (email: string, password: string) => {
 
 export const logoutUser = async () => {
   return await signOut(auth);
+};
+
+// Campaign functions
+export const saveCampaign = async (userId: string, campaignData: any) => {
+  try {
+    const docRef = await addDoc(collection(db, 'campaigns'), {
+      ...campaignData,
+      userId,
+      createdAt: new Date().toISOString()
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error('Error saving campaign:', error);
+    throw error;
+  }
+};
+
+export const getUserCampaigns = async (userId: string) => {
+  try {
+    const q = query(
+      collection(db, 'campaigns'),
+      where('userId', '==', userId),
+      orderBy('createdAt', 'desc')
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error('Error getting campaigns:', error);
+    throw error;
+  }
 };

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Leaf } from 'lucide-react';
 import { auth, logoutUser } from './utils/firebase';
