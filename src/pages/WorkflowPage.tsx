@@ -107,9 +107,10 @@ const WorkflowPage: React.FC<WorkflowPageProps> = ({ formData, userId, onReset }
         // Fetch existing campaign data to check for analysis state
         const existingData = await getCampaignData(id);
         
-        if (existingData.analysisState) {
+        if (existingData && typeof existingData === 'object' && 'analysisState' in existingData) {
           // Restore analysis state
-          const { steps: savedSteps, currentStep: savedStep, isComplete: completed } = existingData.analysisState;
+          const analysisState = existingData.analysisState as any;
+          const { steps: savedSteps, currentStep: savedStep, isComplete: completed } = analysisState;
           
           if (savedSteps && savedSteps.length > 0) {
             setSteps(savedSteps);
@@ -119,8 +120,8 @@ const WorkflowPage: React.FC<WorkflowPageProps> = ({ formData, userId, onReset }
             
             if (completed) {
               setShowSummary(true);
-              if (existingData.analysisState.consolidatedReport) {
-                setConsolidatedReport(existingData.analysisState.consolidatedReport);
+              if (analysisState.consolidatedReport) {
+                setConsolidatedReport(analysisState.consolidatedReport);
               }
             }
           } else {

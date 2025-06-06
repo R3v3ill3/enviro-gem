@@ -52,7 +52,7 @@ export const saveCampaign = async (userId: string, campaignData: any) => {
   }
 };
 
-// New function names to match imports
+// Export with both names for compatibility
 export const saveCampaignData = saveCampaign;
 
 export const updateCampaignData = async (campaignId: string, updates: any) => {
