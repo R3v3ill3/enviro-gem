@@ -1,4 +1,3 @@
-import { CampaignFormData } from '../types';
 
 // Template prompts for each step in the workflow
 export const promptTemplates = {
