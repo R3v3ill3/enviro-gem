@@ -6,7 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signOut
 } from 'firebase/auth';
-import { getFirestore, collection, addDoc, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -48,6 +48,35 @@ export const saveCampaign = async (userId: string, campaignData: any) => {
     return docRef.id;
   } catch (error) {
     console.error('Error saving campaign:', error);
+    throw error;
+  }
+};
+
+// New function names to match imports
+export const saveCampaignData = saveCampaign;
+
+export const updateCampaignData = async (campaignId: string, updates: any) => {
+  try {
+    const campaignRef = doc(db, 'campaigns', campaignId);
+    await updateDoc(campaignRef, updates);
+  } catch (error) {
+    console.error('Error updating campaign:', error);
+    throw error;
+  }
+};
+
+export const getCampaignData = async (campaignId: string) => {
+  try {
+    const campaignRef = doc(db, 'campaigns', campaignId);
+    const campaignSnap = await getDoc(campaignRef);
+    
+    if (campaignSnap.exists()) {
+      return { id: campaignSnap.id, ...campaignSnap.data() };
+    } else {
+      throw new Error('Campaign not found');
+    }
+  } catch (error) {
+    console.error('Error getting campaign:', error);
     throw error;
   }
 };

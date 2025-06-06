@@ -52,7 +52,7 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
     setFormData(prev => ({
       ...prev,
       [section]: {
-        ...prev[section],
+        ...(prev[section] as object),
         [field]: value,
       },
     }));
@@ -69,7 +69,7 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
     setFormData(prev => ({
       ...prev,
       [section]: {
-        ...prev[section],
+        ...(prev[section] as object),
         [field]: value,
       },
     }));

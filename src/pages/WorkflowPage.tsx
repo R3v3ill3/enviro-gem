@@ -152,7 +152,7 @@ const WorkflowPage: React.FC<WorkflowPageProps> = ({ formData, userId, onReset }
 
       setSteps(prevSteps =>
         prevSteps.map(s =>
-          s.id === currentStep ? { ...s, status: 'loading' } : s
+          s.id === currentStep ? { ...s, status: 'loading' as const } : s
         )
       );
 
@@ -179,7 +179,7 @@ const WorkflowPage: React.FC<WorkflowPageProps> = ({ formData, userId, onReset }
 
       const updatedSteps = steps.map(s =>
         s.id === currentStep 
-          ? { ...s, status: 'completed', result: response.content }
+          ? { ...s, status: 'completed' as const, result: response.content }
           : s
       );
       setSteps(updatedSteps);
@@ -220,7 +220,7 @@ const WorkflowPage: React.FC<WorkflowPageProps> = ({ formData, userId, onReset }
       } else {
         setSteps(prevSteps =>
           prevSteps.map(s =>
-            s.id === currentStep ? { ...s, status: 'error' } : s
+            s.id === currentStep ? { ...s, status: 'error' as const } : s
           )
         );
         toast.error(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -248,7 +248,7 @@ const WorkflowPage: React.FC<WorkflowPageProps> = ({ formData, userId, onReset }
     setConsolidatedReport(null);
     setSteps(steps.map(step => ({
       ...step,
-      status: 'pending',
+      status: 'pending' as const,
       result: ''
     })));
     setIsProcessing(false);
@@ -260,7 +260,7 @@ const WorkflowPage: React.FC<WorkflowPageProps> = ({ formData, userId, onReset }
         analysisState: {
           steps: steps.map(step => ({
             ...step,
-            status: 'pending',
+            status: 'pending' as const,
             result: ''
           })),
           currentStep: 1,
